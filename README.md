@@ -1,14 +1,16 @@
 # Hi 👋, I'm Rahul
 
-## 🚀 About Me
-- 🎓 Student / Developer
-- 💻 Learning Java, Web Dev
-- 🔥 Building projects like Smart City Complaint
+👨‍💻 About Me
+🎓 B.Sc Computer Science Graduate
+💻 Java Full Stack Developer
+🚀 Skilled in building scalable web applications
+🤖 Interested in AI tools & modern technologies
+🎯 Focused on writing clean, efficient, and maintainable code
 
 ## 🛠️ Tech Stack
-- Java
-- HTML, CSS, JS
-- MySQL
+👨‍💻 Backend
+🌐 Frontend
+🗄️ Database
 
 ## 🔗 Connect with Me
 
