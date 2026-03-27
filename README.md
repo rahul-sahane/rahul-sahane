@@ -53,7 +53,7 @@
 </p>
 
 
-## 🧰 Tools & Technologies
+## 🧰 Tools
 
 <p align="center">
 
