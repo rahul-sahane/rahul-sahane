@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Java+Full+Stack+Developer;Spring+Boot+Developer;Backend+Engineer;AI+Tools+Builder&center=true&width=600&height=50">
+</p>
+
 # Hi 👋, I'm Rahul
 
 ## 👨‍💻 About Me
