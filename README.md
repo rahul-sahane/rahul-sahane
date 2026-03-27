@@ -12,8 +12,6 @@
 🌐 Frontend
 🗄️ Database
 
-## 🌐 Connect
-
 <p align="center">
 
   <a href="https://instagram.com/rahulxvz">
