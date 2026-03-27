@@ -38,9 +38,6 @@
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=rahul-sahane&theme=tokyonight"/>
 </p>
 
-
-![Rahul's GitHub stats](https://github-readme-stats.vercel.app/api?username=rahul-sahane&show_icons=true&theme=radical)
-
 ## 💻 Top Skills
 
 <p align="center">
