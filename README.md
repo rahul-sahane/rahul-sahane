@@ -2,17 +2,21 @@
 
 ## 👨‍💻 About Me
 
-* 🎓 B.Sc Computer Science Graduate
-* 💻 Java Full Stack Developer
-* 🚀 Skilled in building scalable web applications
-* 🤖 Interested in AI tools & modern technologies
+* 💻 Java Full Stack Developer with strong backend expertise
+* 🎓 B.Sc Computer Science graduate with solid programming fundamentals
+* 🚀 Experienced in building scalable and real-world web applications
+* ⚙️ Skilled in Core Java, Jakarta EE, Spring Boot, REST APIs & Microservices
+* 🌐 Proficient in React.js, HTML, CSS, and JavaScript
+* 🗄️ Hands-on experience with Oracle & MySQL databases
+* 🤖 Exploring AI tools and modern software development practices
 * 🎯 Focused on writing clean, efficient, and maintainable code
 
 
+
 ## 🛠️ Tech Stack
-👨‍💻 Backend <br>
-🌐 Frontend <br>
-🗄️ Database <br>
+* 👨‍💻 Backend <br>
+* 🌐 Frontend <br>
+* 🗄️ Database <br>
 
 ## 🌐 Connect
 
