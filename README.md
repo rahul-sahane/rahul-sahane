@@ -41,13 +41,14 @@
 
 ![Rahul's GitHub stats](https://github-readme-stats.vercel.app/api?username=rahul-sahane&show_icons=true&theme=radical)
 
-## 🔥 Streak Stats
+## 🧰 Tools & Technologies
 
-![GitHub Streak](https://streak-stats.demolab.com/?user=rahul-sahane&theme=radical)
+<p align="center">
 
-## 💻 Top Languages
+<img src="https://skillicons.dev/icons?i=git,github,vscode,postman,mysql,idea,eclipse" />
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=rahul-sahane&layout=compact)
+</p>
+
 
 ## 🧠 Typing Animation
 
