@@ -41,6 +41,19 @@
 
 ![Rahul's GitHub stats](https://github-readme-stats.vercel.app/api?username=rahul-sahane&show_icons=true&theme=radical)
 
+## 💻 Top Skills
+
+<p align="center">
+
+<img src="https://img.shields.io/badge/Core%20Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/>
+<img src="https://img.shields.io/badge/React.js-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+<img src="https://img.shields.io/badge/Jakarta%20EE-6DB33F?style=for-the-badge&logo=java&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Oracle%20Database-F80000?style=for-the-badge&logo=oracle&logoColor=white"/>
+
+</p>
+
+
 ## 🧰 Tools & Technologies
 
 <p align="center">
