@@ -1,8 +1,5 @@
 <p align="center">
-
-<img src="https://img.shields.io/badge/Developer-00F7FF?style=for-the-badge&logo=code&logoColor=black&labelColor=000000&color=00F7FF"/>
-<img src="https://img.shields.io/badge/Backend%20Engineer-36BCF7?style=for-the-badge&logo=server&logoColor=white&labelColor=000000&color=36BCF7"/>
-
+  <img src="https://capsule-render.vercel.app/api?type=blur&color=0:00F7FF,100:2c5364&height=180&section=header&text=Welcome&fontSize=30&fontColor=ffffff&animation=fadeIn"/>
 </p>
 
 # Hi 👋, I'm Rahul
