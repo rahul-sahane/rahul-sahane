@@ -1,11 +1,13 @@
 # Hi 👋, I'm Rahul
 
-👨‍💻 About Me
-🎓 B.Sc Computer Science Graduate
-💻 Java Full Stack Developer
-🚀 Skilled in building scalable web applications
-🤖 Interested in AI tools & modern technologies
-🎯 Focused on writing clean, efficient, and maintainable code
+## 👨‍💻 About Me
+
+* 🎓 B.Sc Computer Science Graduate
+* 💻 Java Full Stack Developer
+* 🚀 Skilled in building scalable web applications
+* 🤖 Interested in AI tools & modern technologies
+* 🎯 Focused on writing clean, efficient, and maintainable code
+
 
 ## 🛠️ Tech Stack
 👨‍💻 Backend
