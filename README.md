@@ -1,13 +1,8 @@
-<!-- 🔥 Gradient Animated Name -->
-
-<h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?font=Fira+Code&size=35&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=600&lines=Rahul+Sahane" />
-</h1>
-
-<!-- 💻 Role Animation -->
-
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?lines=Java+Developer;Backend+Engineer&center=true&width=500&height=45&color=36BCF7">
+
+<img src="https://img.shields.io/badge/Developer-00F7FF?style=for-the-badge&logo=code&logoColor=black&labelColor=000000&color=00F7FF"/>
+<img src="https://img.shields.io/badge/Backend%20Engineer-36BCF7?style=for-the-badge&logo=server&logoColor=white&labelColor=000000&color=36BCF7"/>
+
 </p>
 
 # Hi 👋, I'm Rahul
