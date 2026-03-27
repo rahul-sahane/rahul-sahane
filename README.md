@@ -1,5 +1,5 @@
-![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Java+Developer;Java+Developer;Backend+Engineer)
 <p align="center">
+![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Java+Developer;Java+Developer;Backend+Engineer)
   <img src="https://capsule-render.vercel.app/api?type=blur&color=0:00F7FF,100:2c5364&height=180&section=header&text=Welcome&fontSize=30&fontColor=ffffff&animation=fadeIn"/>
 </p>
 
