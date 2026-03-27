@@ -58,7 +58,7 @@
 
 <p align="center">
 
-<img src="https://skillicons.dev/icons?i=git,github,vscode,postman,mysql,idea,eclipse" />
+<img src="https://skillicons.dev/icons?i=git,github,vscode,mysql,idea,eclipse" />
 
 </p>
 
