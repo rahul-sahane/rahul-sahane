@@ -36,10 +36,6 @@
   <img src="https://streak-stats.demolab.com/?user=rahul-sahane&theme=tokyonight&hide_border=true"/>
 </p>
 
-<p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=rahul-sahane&theme=tokyonight"/>
-</p>
-
 ## 💻 Top Skills
 
 <p align="center">
