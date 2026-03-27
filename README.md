@@ -10,9 +10,9 @@
 
 
 ## 🛠️ Tech Stack
-👨‍💻 Backend
-🌐 Frontend
-🗄️ Database
+👨‍💻 Backend <br>
+🌐 Frontend <br>
+🗄️ Database <br>
 
 ## 🌐 Connect
 
