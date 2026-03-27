@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?lines=Java+Full+Stack+Developer;Spring+Boot+Developer;Backend+Engineer;AI+Tools+Builder&center=true&width=600&height=50">
+  <img src="https://capsule-render.vercel.app/api?type=blur&color=0:00F7FF,100:2c5364&height=180&section=header&text=Welcome&fontSize=30&fontColor=ffffff&animation=fadeIn"/>
 </p>
+
 
 # Hi 👋, I'm Rahul
 
