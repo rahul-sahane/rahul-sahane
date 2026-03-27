@@ -1,8 +1,9 @@
 <p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com/?size=25&duration=2500&color=00F7FF&center=true&vCenter=true&width=400&lines=💻+Developer" />
+</p>
 
-<img src="https://img.shields.io/badge/Developer-00F7FF?style=for-the-badge&logo=code&logoColor=black&labelColor=000000&color=00F7FF"/>
-<img src="https://img.shields.io/badge/Backend%20Engineer-36BCF7?style=for-the-badge&logo=server&logoColor=white&labelColor=000000&color=36BCF7"/>
-
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com/?size=25&duration=2500&color=36BCF7&center=true&vCenter=true&width=400&lines=⚙️+Backend+Engineer" />
 </p>
 
 # Hi 👋, I'm Rahul
