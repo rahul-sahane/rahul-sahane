@@ -75,13 +75,13 @@
 
 ---
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./dist/github-snake-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./dist/github-snake.svg">
-    <img alt="GitHub Contribution Snake" src="./dist/github-snake.svg">
-  </picture>
-</p>
+<div align="center">
+
+### 🐍 Contribution Snake
+
+<img src="./dist/empty-snake.svg" alt="Animated contribution snake" width="900"/>
+
+</div>
 
 ### 🌐 Connect with Me
 
