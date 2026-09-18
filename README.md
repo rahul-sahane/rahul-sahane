@@ -79,7 +79,10 @@
 
 ### 🐍 Contribution Snake
 
-<img src="./dist/empty-snake.svg" alt="Animated contribution snake" width="900"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./dist/empty-snake.svg">
+  <img src="./dist/empty-snake.svg" alt="Animated contribution snake" width="900"/>
+</picture>
 
 </div>
 
