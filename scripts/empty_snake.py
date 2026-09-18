@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generate a dark GitHub contribution-grid snake that travels only through empty cells."""
+"""Generate a simple dark GitHub contribution-grid snake.
+
+The snake is exactly four small blocks and moves cell-by-cell through
+zero-contribution cells only. Contribution cells are never part of its route.
+"""
 import os
 import html
 from collections import deque
@@ -58,7 +62,7 @@ for x, week in enumerate(weeks):
     for day in week["contributionDays"]:
         grid[(x, int(day["weekday"]))] = day
 
-# The snake is allowed to occupy ONLY cells with zero contributions.
+# IMPORTANT: the snake can use only zero-contribution cells.
 occupied = {
     p for p, day in grid.items()
     if day["contributionCount"] > 0
@@ -73,9 +77,9 @@ def neighbors(p):
             yield q
 
 
-# Find the largest connected empty area so the snake has plenty of room.
-components = []
+# Find the largest connected region of empty cells.
 remaining = set(empty)
+components = []
 
 while remaining:
     start = next(iter(remaining))
@@ -98,7 +102,8 @@ if not components:
 
 component = max(components, key=len)
 
-# Build a long path using empty cells only.
+# Create a route through empty cells only.
+# DFS gives the snake a long route while keeping every step orthogonal.
 start = min(component, key=lambda p: (p[0], p[1]))
 walk = []
 visited = set()
@@ -113,14 +118,13 @@ def dfs(p):
         if n in component and n not in visited
     ]
 
-    # Prefer cells with fewer exits to make the route look less random.
+    # Prefer tighter turns so the route looks like a small arcade snake.
     options.sort(
         key=lambda n: sum(1 for z in neighbors(n) if z not in visited)
     )
 
     for n in options:
         dfs(n)
-        # Return through the same empty cell; never crosses a contribution cell.
         walk.append(p)
 
 
@@ -136,7 +140,6 @@ WIDTH = len(weeks) * STEP + MARGIN_X * 2
 HEIGHT = 7 * STEP + MARGIN_Y * 2
 
 BG = "#0d1117"
-PANEL = "#0d1117"
 EMPTY = "#161b22"
 BORDER = "#30363d"
 
@@ -149,102 +152,95 @@ def center(pos):
     )
 
 
+# SVG motion path. Every point is an empty contribution cell.
 path_d = " ".join(
     ("M" if i == 0 else "L")
     + f"{center(p)[0]:.1f},{center(p)[1]:.1f}"
     for i, p in enumerate(walk)
 )
 
-duration = max(18, min(48, len(walk) * 0.07))
+# Keep the speed calm: one grid-cell step is visually clear.
+duration = max(24, min(55, len(walk) * 0.10))
 
 svg = [
     f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} {HEIGHT}" '
-    'role="img" aria-label="Animated dark GitHub contribution snake">',
-    """<style>
-      .cell { shape-rendering: geometricPrecision; }
-      .snake-body {
-        filter: url(#snakeGlow);
-      }
-    </style>""",
-    """<defs>
-      <linearGradient id="snakeGradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#a855f7"/>
-        <stop offset="45%" stop-color="#d946ef"/>
-        <stop offset="100%" stop-color="#f43f5e"/>
-      </linearGradient>
-
-      <linearGradient id="headGradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#c026d3"/>
-        <stop offset="55%" stop-color="#e879f9"/>
-        <stop offset="100%" stop-color="#fb7185"/>
-      </linearGradient>
-
-      <filter id="snakeGlow" x="-100%" y="-100%" width="300%" height="300%">
-        <feGaussianBlur stdDeviation="2.2" result="blur"/>
-        <feMerge>
-          <feMergeNode in="blur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-
-      <filter id="headShadow" x="-100%" y="-100%" width="300%" height="300%">
-        <feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-opacity=".45"/>
-      </filter>
-    </defs>""",
+    'role="img" aria-label="Four-block dark GitHub contribution snake">',
     f'<rect width="100%" height="100%" rx="10" fill="{BG}"/>',
     f'<rect x="1" y="1" width="{WIDTH - 2}" height="{HEIGHT - 2}" rx="10" '
-    f'fill="{PANEL}" stroke="{BORDER}" stroke-width="1"/>',
+    f'fill="none" stroke="{BORDER}" stroke-width="1"/>',
 ]
 
-# Draw the contribution calendar.
+# Draw the GitHub-style grid.
 for (x, y), day in sorted(grid.items()):
     px = MARGIN_X + x * STEP
     py = MARGIN_Y + y * STEP
 
-    # Real contribution cells keep GitHub's own green shade.
-    # Zero-contribution cells remain dark and are the only cells the snake uses.
+    # Green cells are real contributions.
+    # Dark cells are empty and are the ONLY cells used by the snake.
     color = day["color"] if day["contributionCount"] > 0 else EMPTY
 
     svg.append(
-        f'<rect class="cell" x="{px}" y="{py}" width="{CELL}" height="{CELL}" rx="3" '
+        f'<rect x="{px}" y="{py}" width="{CELL}" height="{CELL}" rx="3" '
         f'fill="{html.escape(color)}">'
         f'<title>{html.escape(day["date"])}: '
         f'{day["contributionCount"]} contributions</title></rect>'
     )
 
-# Invisible motion path used by the snake head.
-svg.append(
-    f'<path id="snakePath" d="{path_d}" fill="none" stroke="none" pathLength="1000"/>'
-)
+# Hidden path used only for motion.
+svg.append(f'<path id="snakePath" d="{path_d}" fill="none" stroke="none"/>')
 
-# One continuous body: a moving dash on a single SVG path.
-# This intentionally avoids the old "many moving dots" look.
-body_length = min(95, max(52, len(walk) * 0.11))
+# EXACTLY FOUR small blocks. No glow, no trail, no gradient, no extra effects.
+# Each block follows the same empty-cell route with a short delay, creating
+# the classic 4-block snake look from the reference image.
+block_size = 13
+gap_distance = 3
+head_delay = 0.0
+body_delays = [0.0, 0.22, 0.44, 0.66]
 
+svg.append('<g aria-label="four block snake">')
+
+for i, delay in enumerate(body_delays):
+    if i == 3:
+        # Tail is a simple block.
+        block = (
+            f'<rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}" '
+            f'width="{block_size}" height="{block_size}" rx="3" fill="#a855f7"/>'
+        )
+    else:
+        block = (
+            f'<rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}" '
+            f'width="{block_size}" height="{block_size}" rx="3" fill="#d946ef"/>'
+        )
+
+    svg.append(
+        f'''
+        <g>
+          {block}
+          <animateMotion dur="{duration:.2f}s" repeatCount="indefinite"
+                         rotate="0" calcMode="linear"
+                         begin="{delay:.2f}s">
+            <mpath href="#snakePath"/>
+          </animateMotion>
+        </g>
+        '''
+    )
+
+# Add two tiny eyes only to the leading block.
+# They move with the same path, so the snake remains visually four blocks.
 svg.append(
     f'''
-<g class="snake-body">
-  <path d="{path_d}" fill="none" stroke="url(#snakeGradient)"
-        stroke-width="11" stroke-linecap="round" stroke-linejoin="round"
-        pathLength="1000" stroke-dasharray="{body_length} 1000"
-        stroke-dashoffset="0">
-    <animate attributeName="stroke-dashoffset"
-             from="0" to="-1000"
-             dur="{duration:.2f}s" repeatCount="indefinite"/>
-  </path>
-
-  <!-- Square head, matching the block-like snake style. -->
-  <rect x="-7" y="-7" width="14" height="14" rx="3.5"
-        fill="url(#headGradient)" stroke="#f5d0fe" stroke-width="1"
-        filter="url(#headShadow)">
-    <animateMotion dur="{duration:.2f}s" repeatCount="indefinite" rotate="auto">
-      <mpath href="#snakePath"/>
-    </animateMotion>
-  </rect>
-</g>
-'''
+    <g>
+      <circle cx="-3.2" cy="-2.0" r="1.25" fill="#ffffff"/>
+      <circle cx="3.2" cy="-2.0" r="1.25" fill="#ffffff"/>
+      <animateMotion dur="{duration:.2f}s" repeatCount="indefinite"
+                     rotate="0" calcMode="linear">
+        <mpath href="#snakePath"/>
+      </animateMotion>
+    </g>
+    '''
 )
 
+svg.append("</g>")
 svg.append("</svg>")
 
 out = os.environ.get("OUTPUT", "dist/empty-snake.svg")
