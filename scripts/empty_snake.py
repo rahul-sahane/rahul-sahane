@@ -151,7 +151,7 @@ svg = [
 for (x, y), day in sorted(grid.items()):
     px = MARGIN + x * STEP
     py = MARGIN + y * STEP
-    color = day["color"] if day["contributionCount"] > 0 else "#161b22"
+    color = day["color"] if day["contributionCount"] > 0 else "#0d1117"
     svg.append(
         f'<rect class="cell" x="{px}" y="{py}" width="{CELL}" height="{CELL}" rx="3" fill="{html.escape(color)}">'
         f'<title>{html.escape(day["date"])}: {day["contributionCount"]} contributions</title></rect>'
@@ -159,34 +159,22 @@ for (x, y), day in sorted(grid.items()):
 
 svg.append(f'<path id="snakePath" d="{path_d}" fill="none" stroke="none"/>')
 
-# Seven body segments create a clearly visible snake rather than isolated dots.
-segment_count = 8
-for i in range(segment_count, 0, -1):
-    radius = 4.1 + (0.35 if i == segment_count else 0)
-    delay = -(i * duration / (segment_count + 2))
-    svg.append(
-        f'<circle class="snake" r="{radius:.1f}" fill="url(#snakeGradient)" opacity="{0.62 + (segment_count-i)*0.045:.2f}">'
-        f'<animateMotion dur="{duration:.2f}s" repeatCount="indefinite" begin="{delay:.2f}s" rotate="auto">'
-        '<mpath href="#snakePath"/></animateMotion></circle>'
-    )
-
-# Animated head, with eyes that move and rotate with the snake.
+# Continuous snake body: one moving stroke, not separate moving dots.
+snake_length = min(180, max(70, len(walk) * 0.18))
 svg.append(f'''
 <g class="snake" filter="url(#glow)">
-  <circle r="6.2" fill="url(#headGradient)" stroke="#fff" stroke-width="1.1">
+  <path d="{path_d}" fill="none" stroke="url(#snakeGradient)" stroke-width="7"
+        stroke-linecap="round" stroke-linejoin="round"
+        stroke-dasharray="{snake_length} 10000">
+    <animate attributeName="stroke-dashoffset"
+             from="0" to="-{max(1, len(walk))*STEP}"
+             dur="{duration:.2f}s" repeatCount="indefinite"/>
+  </path>
+  <circle r="6.5" fill="url(#headGradient)" stroke="#ffffff" stroke-width="1.1">
     <animateMotion dur="{duration:.2f}s" repeatCount="indefinite" rotate="auto">
       <mpath href="#snakePath"/>
     </animateMotion>
   </circle>
-  <g transform="translate(0,-2.1)">
-    <circle cx="-2.0" cy="0" r="1.35" class="eye"/>
-    <circle cx="2.0" cy="0" r="1.35" class="eye"/>
-    <circle cx="-1.75" cy="0" r=".65" class="pupil"/>
-    <circle cx="2.25" cy="0" r=".65" class="pupil"/>
-    <animateMotion dur="{duration:.2f}s" repeatCount="indefinite" rotate="auto">
-      <mpath href="#snakePath"/>
-    </animateMotion>
-  </g>
 </g>
 ''')
 
