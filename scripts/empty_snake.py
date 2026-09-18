@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Generate an SVG snake that travels only through zero-contribution cells."""
-import os, sys, html
+"""Generate a polished SVG snake that travels only through zero-contribution cells."""
+import os, html
 from collections import deque
 import requests
 
@@ -46,7 +46,7 @@ if not user:
 
 weeks = user["contributionsCollection"]["contributionCalendar"]["weeks"]
 
-# GitHub weekday is 0=Sunday ... 6=Saturday. Do NOT subtract 1.
+# GitHub weekday is 0=Sunday ... 6=Saturday.
 grid = {}
 for x, week in enumerate(weeks):
     for day in week["contributionDays"]:
@@ -57,11 +57,11 @@ empty = set(grid) - occupied
 
 def neighbors(p):
     x, y = p
-    for q in ((x-1,y), (x+1,y), (x,y-1), (x,y+1)):
+    for q in ((x-1, y), (x+1, y), (x, y-1), (x, y+1)):
         if q in empty:
             yield q
 
-# Find connected empty-cell regions.
+# Select the largest connected region of empty cells.
 components = []
 remaining = set(empty)
 while remaining:
@@ -83,8 +83,7 @@ if not components:
 
 component = max(components, key=len)
 
-# DFS walk. Every point is taken from component, so the snake never occupies
-# a contribution cell. Revisiting empty cells is intentional.
+# Depth-first traversal through empty cells only.
 start = min(component, key=lambda p: (p[0], p[1]))
 walk = []
 visited = set()
@@ -116,19 +115,43 @@ path_d = " ".join(
     for i, p in enumerate(walk)
 )
 
-duration = max(12, min(45, len(walk) * 0.07))
+duration = max(14, min(42, len(walk) * 0.06))
 
 svg = [
-    f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} {HEIGHT}" role="img" aria-label="GitHub contributions with a snake moving only through empty cells">',
-    "<style>.cell{shape-rendering:geometricPrecision}.snake{filter:url(#shadow)}</style>",
-    '<defs><filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity=".25"/></filter></defs>',
+    f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} {HEIGHT}" role="img" aria-label="GitHub contribution snake animation">',
+    """<style>
+      .cell{shape-rendering:geometricPrecision}
+      .snake{filter:url(#snakeShadow)}
+      .eye{fill:#fff}
+      .pupil{fill:#111}
+    </style>""",
+    """<defs>
+      <linearGradient id="snakeGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ff3d81"/>
+        <stop offset="48%" stop-color="#ff6b35"/>
+        <stop offset="100%" stop-color="#ffd166"/>
+      </linearGradient>
+      <linearGradient id="headGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ff2d75"/>
+        <stop offset="55%" stop-color="#ff6b35"/>
+        <stop offset="100%" stop-color="#ffb347"/>
+      </linearGradient>
+      <filter id="snakeShadow" x="-100%" y="-100%" width="300%" height="300%">
+        <feDropShadow dx="0" dy="1.5" stdDeviation="1.4" flood-opacity=".35"/>
+      </filter>
+      <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="1.6" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>""",
     '<rect width="100%" height="100%" fill="transparent"/>',
 ]
 
+# Preserve the real contribution colors. Empty cells stay neutral.
 for (x, y), day in sorted(grid.items()):
     px = MARGIN + x * STEP
     py = MARGIN + y * STEP
-    color = day["color"] if day["contributionCount"] > 0 else "#ebedf0"
+    color = day["color"] if day["contributionCount"] > 0 else "#161b22"
     svg.append(
         f'<rect class="cell" x="{px}" y="{py}" width="{CELL}" height="{CELL}" rx="3" fill="{html.escape(color)}">'
         f'<title>{html.escape(day["date"])}: {day["contributionCount"]} contributions</title></rect>'
@@ -136,21 +159,37 @@ for (x, y), day in sorted(grid.items()):
 
 svg.append(f'<path id="snakePath" d="{path_d}" fill="none" stroke="none"/>')
 
-for i in range(7, 0, -1):
-    radius = 4.8 if i == 7 else 4.0
-    color = "#ff6b35" if i == 7 else "#ff8c5a"
-    delay = -(i * duration / 9)
+# Seven body segments create a clearly visible snake rather than isolated dots.
+segment_count = 8
+for i in range(segment_count, 0, -1):
+    radius = 4.1 + (0.35 if i == segment_count else 0)
+    delay = -(i * duration / (segment_count + 2))
     svg.append(
-        f'<circle class="snake" r="{radius}" fill="{color}">'
+        f'<circle class="snake" r="{radius:.1f}" fill="url(#snakeGradient)" opacity="{0.62 + (segment_count-i)*0.045:.2f}">'
         f'<animateMotion dur="{duration:.2f}s" repeatCount="indefinite" begin="{delay:.2f}s" rotate="auto">'
         '<mpath href="#snakePath"/></animateMotion></circle>'
     )
 
-svg.append(
-    '<circle r="6" fill="#ff5a36" stroke="#ffffff" stroke-width="1.5" class="snake">'
-    f'<animateMotion dur="{duration:.2f}s" repeatCount="indefinite" rotate="auto">'
-    '<mpath href="#snakePath"/></animateMotion></circle>'
-)
+# Animated head, with eyes that move and rotate with the snake.
+svg.append(f'''
+<g class="snake" filter="url(#glow)">
+  <circle r="6.2" fill="url(#headGradient)" stroke="#fff" stroke-width="1.1">
+    <animateMotion dur="{duration:.2f}s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#snakePath"/>
+    </animateMotion>
+  </circle>
+  <g transform="translate(0,-2.1)">
+    <circle cx="-2.0" cy="0" r="1.35" class="eye"/>
+    <circle cx="2.0" cy="0" r="1.35" class="eye"/>
+    <circle cx="-1.75" cy="0" r=".65" class="pupil"/>
+    <circle cx="2.25" cy="0" r=".65" class="pupil"/>
+    <animateMotion dur="{duration:.2f}s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#snakePath"/>
+    </animateMotion>
+  </g>
+</g>
+''')
+
 svg.append("</svg>")
 
 out = os.environ.get("OUTPUT", "dist/empty-snake.svg")
