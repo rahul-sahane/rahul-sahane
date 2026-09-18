@@ -87,24 +87,32 @@ if not components:
 
 component = max(components, key=len)
 
-# Build a long orthogonal route through empty cells only.
-start = min(component, key=lambda p: (p[0], p[1]))
-walk = []
-visited = set()
+# Build a simple straight horizontal route through empty cells only.
+# The snake moves left-to-right on one empty row, then starts again.
+# No turning, diagonal movement, or curved path.
+rows = {}
+for x, y in empty:
+    rows.setdefault(y, []).append(x)
 
+# Choose the longest horizontal run of consecutive empty cells.
+best = []
+for y, xs in rows.items():
+    xs = sorted(xs)
+    run = [xs[0]] if xs else []
+    for x in xs[1:]:
+        if x == run[-1] + 1:
+            run.append(x)
+        else:
+            if len(run) > len(best):
+                best = [(rx, y) for rx in run]
+            run = [x]
+    if len(run) > len(best):
+        best = [(rx, y) for rx in run]
 
-def dfs(p):
-    visited.add(p)
-    walk.append(p)
-    options = [n for n in neighbors(p) if n in component and n not in visited]
-    options.sort(key=lambda n: sum(1 for z in neighbors(n) if z not in visited))
-    for n in options:
-        dfs(n)
-        walk.append(p)
+if len(best) < 2:
+    raise SystemExit("No straight empty-cell route found.")
 
-
-dfs(start)
-
+walk = best
 CELL = 16
 GAP = 4
 STEP = CELL + GAP
