@@ -1,3 +1,5 @@
+# Custom empty-cell contribution snake by Rahul Sahane.
+# Feel free to copy and customize this generator; please keep the credit.
 #!/usr/bin/env python3
 """Generate a simple dark GitHub contribution-grid snake.
 
