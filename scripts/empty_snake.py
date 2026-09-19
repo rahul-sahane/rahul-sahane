@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generate a dark GitHub contribution-grid snake using four close blocks."""
+"""Generate a simple dark GitHub contribution-grid snake.
+
+The snake is exactly four small blocks and moves cell-by-cell through
+zero-contribution cells only. Contribution cells are never part of its route.
+"""
 import os
 import html
 from collections import deque
@@ -8,6 +12,7 @@ import requests
 API = "https://api.github.com/graphql"
 USERNAME = os.environ.get("GITHUB_USER", "")
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
+
 if not USERNAME or not TOKEN:
     raise SystemExit("GITHUB_USER and GITHUB_TOKEN are required")
 
@@ -33,10 +38,14 @@ query($login: String!) {
 resp = requests.post(
     API,
     json={"query": QUERY, "variables": {"login": USERNAME}},
-    headers={"Authorization": f"Bearer {TOKEN}", "Accept": "application/vnd.github+json"},
+    headers={
+        "Authorization": f"Bearer {TOKEN}",
+        "Accept": "application/vnd.github+json",
+    },
     timeout=30,
 )
 resp.raise_for_status()
+
 payload = resp.json()
 if payload.get("errors"):
     raise SystemExit("GitHub GraphQL error: " + str(payload["errors"]))
@@ -53,8 +62,11 @@ for x, week in enumerate(weeks):
     for day in week["contributionDays"]:
         grid[(x, int(day["weekday"]))] = day
 
-# The snake may ONLY occupy zero-contribution cells.
-occupied = {p for p, d in grid.items() if d["contributionCount"] > 0}
+# IMPORTANT: the snake can use only zero-contribution cells.
+occupied = {
+    p for p, day in grid.items()
+    if day["contributionCount"] > 0
+}
 empty = set(grid) - occupied
 
 
@@ -65,14 +77,16 @@ def neighbors(p):
             yield q
 
 
-# Find the largest connected empty region.
+# Find the largest connected region of empty cells.
 remaining = set(empty)
 components = []
+
 while remaining:
     start = next(iter(remaining))
     component = {start}
     queue = deque([start])
     remaining.remove(start)
+
     while queue:
         p = queue.popleft()
         for n in neighbors(p):
@@ -80,6 +94,7 @@ while remaining:
                 remaining.remove(n)
                 component.add(n)
                 queue.append(n)
+
     components.append(component)
 
 if not components:
@@ -87,15 +102,14 @@ if not components:
 
 component = max(components, key=len)
 
-# Build a route through all empty cells. The snake never crosses a
-# contribution cell. When two empty regions are disconnected, it travels
-# briefly outside the grid and re-enters at the next empty region.
+# Route through all empty-cell components.
+# Contribution cells are never crossed. Between disconnected empty regions,
+# the snake leaves the grid and re-enters from outside.
 remaining = set(empty)
 walk = []
 
 while remaining:
     start = min(remaining, key=lambda p: (p[0], p[1]))
-
     component = {start}
     queue = deque([start])
     remaining.remove(start)
@@ -123,14 +137,9 @@ while remaining:
     dfs(start)
 
     if walk:
-        # Leave the grid before starting the next disconnected empty region.
-        # These points are outside the contribution cells, so green cells are
-        # never crossed.
         last = walk[-1]
         first = component_walk[0]
-        outside_a = (last[0], -1)
-        outside_b = (first[0], -1)
-        walk.extend([outside_a, outside_b])
+        walk.extend([(last[0], -1), (first[0], -1)])
 
     walk.extend(component_walk)
 
@@ -142,8 +151,10 @@ GAP = 4
 STEP = CELL + GAP
 MARGIN_X = 12
 MARGIN_Y = 24
+
 WIDTH = len(weeks) * STEP + MARGIN_X * 2
 HEIGHT = 7 * STEP + MARGIN_Y * 2
+
 BG = "#0d1117"
 EMPTY = "#161b22"
 BORDER = "#30363d"
@@ -151,88 +162,97 @@ BORDER = "#30363d"
 
 def center(pos):
     x, y = pos
-    return MARGIN_X + x * STEP + CELL / 2, MARGIN_Y + y * STEP + CELL / 2
+    return (
+        MARGIN_X + x * STEP + CELL / 2,
+        MARGIN_Y + y * STEP + CELL / 2,
+    )
 
 
-# The FIRST animation style: a single continuous moving dash on one path.
+# SVG motion path. Every point is an empty contribution cell.
 path_d = " ".join(
-    ("M" if i == 0 else "L") + f"{center(p)[0]:.1f},{center(p)[1]:.1f}"
+    ("M" if i == 0 else "L")
+    + f"{center(p)[0]:.1f},{center(p)[1]:.1f}"
     for i, p in enumerate(walk)
 )
-duration = max(18, min(42, len(walk) * 0.06))
+
+# Keep the speed calm: one grid-cell step is visually clear.
+duration = max(24, min(55, len(walk) * 0.10))
 
 svg = [
     f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} {HEIGHT}" '
-    'role="img" aria-label="Dark GitHub contribution snake">',
-    """<defs>
-      <linearGradient id="snakeGradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#ff3d81"/>
-        <stop offset="48%" stop-color="#ff6b35"/>
-        <stop offset="100%" stop-color="#ffd166"/>
-      </linearGradient>
-      <linearGradient id="headGradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#ff2d75"/>
-        <stop offset="55%" stop-color="#ff6b35"/>
-        <stop offset="100%" stop-color="#ffb347"/>
-      </linearGradient>
-      <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-        <feGaussianBlur stdDeviation="1.6" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>""",
+    'role="img" aria-label="Four-block dark GitHub contribution snake">',
     f'<rect width="100%" height="100%" rx="10" fill="{BG}"/>',
+    f'<rect x="1" y="1" width="{WIDTH - 2}" height="{HEIGHT - 2}" rx="10" '
+    f'fill="none" stroke="{BORDER}" stroke-width="1"/>',
 ]
 
+# Draw the GitHub-style grid.
 for (x, y), day in sorted(grid.items()):
     px = MARGIN_X + x * STEP
     py = MARGIN_Y + y * STEP
+
+    # Green cells are real contributions.
+    # Dark cells are empty and are the ONLY cells used by the snake.
     color = day["color"] if day["contributionCount"] > 0 else EMPTY
+
     svg.append(
-        f'<rect x="{px}" y="{py}" width="{CELL}" height="{CELL}" rx="3" fill="{html.escape(color)}">'
-        f'<title>{html.escape(day["date"])}: {day["contributionCount"]} contributions</title></rect>'
+        f'<rect x="{px}" y="{py}" width="{CELL}" height="{CELL}" rx="3" '
+        f'fill="{html.escape(color)}">'
+        f'<title>{html.escape(day["date"])}: '
+        f'{day["contributionCount"]} contributions</title></rect>'
     )
 
+# Hidden path used only for motion.
 svg.append(f'<path id="snakePath" d="{path_d}" fill="none" stroke="none"/>')
 
-# Four blocks with exactly one grid-cell of path spacing.
-# No glow, trail, gradient, or extra animation.
-block_size = 11
+# EXACTLY FOUR small blocks — the first animation style.
+# No second animation, trail, glow, or gradient.
+block_size = 13
 one_cell_delay = duration / max(1, len(walk) - 1)
+body_delays = [0.0, one_cell_delay, 2 * one_cell_delay, 3 * one_cell_delay]
 
-svg.append('<g aria-label="four-block snake">')
+svg.append('<g aria-label="four block snake">')
 
-for i in range(4):
-    fill = "#d946ef" if i < 3 else "#a855f7"
-    delay = i * one_cell_delay
-
-    if i == 0:
-        block = (
-            f'<rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}" '
-            f'width="{block_size}" height="{block_size}" rx="3" fill="{fill}"/>'
-        )
-    else:
-        block = (
-            f'<rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}" '
-            f'width="{block_size}" height="{block_size}" rx="3" fill="{fill}"/>'
-        )
+for i, delay in enumerate(body_delays):
+    fill = "#a855f7" if i == 3 else "#d946ef"
+    block = (
+        f'<rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}" '
+        f'width="{block_size}" height="{block_size}" rx="3" fill="{fill}"/>'
+    )
 
     svg.append(
         f'''
         <g>
           {block}
           <animateMotion dur="{duration:.2f}s" repeatCount="indefinite"
-                         calcMode="linear" begin="{delay:.2f}s">
+                         rotate="0" calcMode="linear"
+                         begin="{delay:.2f}s">
             <mpath href="#snakePath"/>
           </animateMotion>
         </g>
         '''
     )
 
+# The head eyes are part of the same first animation.
+svg.append(
+    f'''
+    <g>
+      <circle cx="-3.2" cy="-2.0" r="1.25" fill="#ffffff"/>
+      <circle cx="3.2" cy="-2.0" r="1.25" fill="#ffffff"/>
+      <animateMotion dur="{duration:.2f}s" repeatCount="indefinite"
+                     rotate="0" calcMode="linear">
+        <mpath href="#snakePath"/>
+      </animateMotion>
+    </g>
+    '''
+)
+
 svg.append("</g>")
 svg.append("</svg>")
 
 out = os.environ.get("OUTPUT", "dist/empty-snake.svg")
 os.makedirs(os.path.dirname(out), exist_ok=True)
+
 with open(out, "w", encoding="utf-8") as f:
     f.write("\n".join(svg))
 
