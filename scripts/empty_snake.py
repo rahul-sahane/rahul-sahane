@@ -87,13 +87,15 @@ if not components:
 
 component = max(components, key=len)
 
-# Build a long route through every reachable zero-contribution cell.
-# Green contribution cells are obstacles and are never crossed.
+# Build a route through all empty cells. The snake never crosses a
+# contribution cell. When two empty regions are disconnected, it travels
+# briefly outside the grid and re-enters at the next empty region.
 remaining = set(empty)
 walk = []
 
 while remaining:
     start = min(remaining, key=lambda p: (p[0], p[1]))
+
     component = {start}
     queue = deque([start])
     remaining.remove(start)
@@ -106,9 +108,6 @@ while remaining:
                 component.add(n)
                 queue.append(n)
 
-    # DFS walk covers the entire connected empty component using only
-    # horizontal/vertical moves. Smaller components are appended as
-    # separate valid empty-cell sections.
     visited = set()
     component_walk = []
 
@@ -122,6 +121,17 @@ while remaining:
             component_walk.append(p)
 
     dfs(start)
+
+    if walk:
+        # Leave the grid before starting the next disconnected empty region.
+        # These points are outside the contribution cells, so green cells are
+        # never crossed.
+        last = walk[-1]
+        first = component_walk[0]
+        outside_a = (last[0], -1)
+        outside_b = (first[0], -1)
+        walk.extend([outside_a, outside_b])
+
     walk.extend(component_walk)
 
 if not walk:
@@ -184,41 +194,40 @@ for (x, y), day in sorted(grid.items()):
 
 svg.append(f'<path id="snakePath" d="{path_d}" fill="none" stroke="none"/>')
 
-# Four small blocks with visible spacing, matching the reference image.
-# The blocks follow the same path but with a larger time offset.
+# Four blocks with exactly one grid-cell of path spacing.
+# No glow, trail, gradient, or extra animation.
 block_size = 11
-block_delay = 0.32
+one_cell_delay = duration / max(1, len(walk) - 1)
 
 svg.append('<g aria-label="four-block snake">')
 
 for i in range(4):
     fill = "#d946ef" if i < 3 else "#a855f7"
-    delay = i * block_delay
+    delay = i * one_cell_delay
+
+    if i == 0:
+        block = (
+            f'<rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}" '
+            f'width="{block_size}" height="{block_size}" rx="3" fill="{fill}"/>'
+        )
+    else:
+        block = (
+            f'<rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}" '
+            f'width="{block_size}" height="{block_size}" rx="3" fill="{fill}"/>'
+        )
+
     svg.append(
         f'''
-        <rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}"
-              width="{block_size}" height="{block_size}" rx="3"
-              fill="{fill}">
+        <g>
+          {block}
           <animateMotion dur="{duration:.2f}s" repeatCount="indefinite"
                          calcMode="linear" begin="{delay:.2f}s">
             <mpath href="#snakePath"/>
           </animateMotion>
-        </rect>
+        </g>
         '''
     )
 
-# Eyes travel with the leading block.
-svg.append(
-    f'''
-    <g>
-      <circle cx="-3.0" cy="-2.0" r="1.2" fill="#ffffff"/>
-      <circle cx="3.0" cy="-2.0" r="1.2" fill="#ffffff"/>
-      <animateMotion dur="{duration:.2f}s" repeatCount="indefinite" calcMode="linear">
-        <mpath href="#snakePath"/>
-      </animateMotion>
-    </g>
-    '''
-)
 svg.append("</g>")
 svg.append("</svg>")
 
