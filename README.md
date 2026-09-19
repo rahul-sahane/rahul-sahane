@@ -79,13 +79,24 @@
 
 ### 🐍 Contribution Snake
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./dist/empty-snake.svg">
+<p align="center">
   <img src="./dist/empty-snake.svg" alt="Animated contribution snake" width="900"/>
-</picture>
+</p>
 
-</div>
+<p align="center">
+  <sub>🐍 Custom empty-cell contribution snake by <b>Rahul Sahane</b> — feel free to copy and customize it. Please keep the credit.</sub>
+</p>
 
+<details>
+<summary>📋 How to copy this snake</summary>
+
+1. Copy <code>scripts/empty_snake.py</code>.
+2. Copy <code>.github/workflows/empty-snake.yml</code>.
+3. Create the <code>dist</code> folder and let GitHub Actions generate <code>empty-snake.svg</code>.
+4. Update your README to display <code>./dist/empty-snake.svg</code>.
+5. Keep the credit to <b>Rahul Sahane</b> when you reuse or modify this project.
+
+</details>
 ### 🌐 Connect with Me
 
 <p align="center">
