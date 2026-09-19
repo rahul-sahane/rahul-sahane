@@ -87,32 +87,46 @@ if not components:
 
 component = max(components, key=len)
 
-# Build a simple straight horizontal route through empty cells only.
-# The snake moves left-to-right on one empty row, then starts again.
-# No turning, diagonal movement, or curved path.
-rows = {}
-for x, y in empty:
-    rows.setdefault(y, []).append(x)
+# Build a long route through every reachable zero-contribution cell.
+# Green contribution cells are obstacles and are never crossed.
+remaining = set(empty)
+walk = []
 
-# Choose the longest horizontal run of consecutive empty cells.
-best = []
-for y, xs in rows.items():
-    xs = sorted(xs)
-    run = [xs[0]] if xs else []
-    for x in xs[1:]:
-        if x == run[-1] + 1:
-            run.append(x)
-        else:
-            if len(run) > len(best):
-                best = [(rx, y) for rx in run]
-            run = [x]
-    if len(run) > len(best):
-        best = [(rx, y) for rx in run]
+while remaining:
+    start = min(remaining, key=lambda p: (p[0], p[1]))
+    component = {start}
+    queue = deque([start])
+    remaining.remove(start)
 
-if len(best) < 2:
-    raise SystemExit("No straight empty-cell route found.")
+    while queue:
+        p = queue.popleft()
+        for n in neighbors(p):
+            if n in remaining:
+                remaining.remove(n)
+                component.add(n)
+                queue.append(n)
 
-walk = best
+    # DFS walk covers the entire connected empty component using only
+    # horizontal/vertical moves. Smaller components are appended as
+    # separate valid empty-cell sections.
+    visited = set()
+    component_walk = []
+
+    def dfs(p):
+        visited.add(p)
+        component_walk.append(p)
+        options = [n for n in neighbors(p) if n in component and n not in visited]
+        options.sort(key=lambda n: sum(1 for z in neighbors(n) if z not in visited))
+        for n in options:
+            dfs(n)
+            component_walk.append(p)
+
+    dfs(start)
+    walk.extend(component_walk)
+
+if not walk:
+    raise SystemExit("No zero-contribution cells found.")
+
 CELL = 16
 GAP = 4
 STEP = CELL + GAP
@@ -170,17 +184,16 @@ for (x, y), day in sorted(grid.items()):
 
 svg.append(f'<path id="snakePath" d="{path_d}" fill="none" stroke="none"/>')
 
-# Four small blocks, kept close together. This recreates the first animation
-# style while avoiding the large-body version.
+# Four small blocks with visible spacing, matching the reference image.
+# The blocks follow the same path but with a larger time offset.
 block_size = 11
-close_delay = 0.10
+block_delay = 0.32
 
-svg.append('<g filter="url(#glow)" aria-label="four-block snake">')
+svg.append('<g aria-label="four-block snake">')
 
 for i in range(4):
-    # 0 = head, 1..3 = close-following body blocks.
-    fill = "#ff3d81" if i == 0 else "#ff6b35"
-    delay = i * close_delay
+    fill = "#d946ef" if i < 3 else "#a855f7"
+    delay = i * block_delay
     svg.append(
         f'''
         <rect x="{-block_size/2:.1f}" y="{-block_size/2:.1f}"
@@ -194,6 +207,18 @@ for i in range(4):
         '''
     )
 
+# Eyes travel with the leading block.
+svg.append(
+    f'''
+    <g>
+      <circle cx="-3.0" cy="-2.0" r="1.2" fill="#ffffff"/>
+      <circle cx="3.0" cy="-2.0" r="1.2" fill="#ffffff"/>
+      <animateMotion dur="{duration:.2f}s" repeatCount="indefinite" calcMode="linear">
+        <mpath href="#snakePath"/>
+      </animateMotion>
+    </g>
+    '''
+)
 svg.append("</g>")
 svg.append("</svg>")
 
