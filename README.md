@@ -88,16 +88,9 @@
 </p>
 
 <details>
-<summary>📋 How to copy this snake</summary>
-
-1. Copy <code>scripts/empty_snake.py</code>.
-2. Copy <code>.github/workflows/empty-snake.yml</code>.
-3. Create the <code>dist</code> folder and let GitHub Actions generate <code>empty-snake.svg</code>.
-4. Update your README to display <code>./dist/empty-snake.svg</code>.
-5. Keep the credit to <b>Rahul Sahane</b> when you reuse or modify this project.
 
 </details>
-### 🌐 Connect with Me
+🌐 Connect with Me
 
 <p align="center">
   <a href="https://linkedin.com/in/rahul-sahane" target="_blank">
