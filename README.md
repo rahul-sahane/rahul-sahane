@@ -62,6 +62,10 @@
 ### 📊 GitHub Stats
 
 <p align="center">
+  <img src="./dist/github-stats.svg" width="100%" alt="Rahul's GitHub stats" />
+</p>
+
+<p align="center">
   <img src="https://streak-stats.demolab.com?user=rahul-sahane&theme=tokyonight&hide_border=true" />
 </p>
 
