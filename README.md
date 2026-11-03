@@ -79,16 +79,6 @@
   <img src="./dist/github-stats.svg" width="100%" alt="Rahul's GitHub stats" />
 </p>
 
-<p align="center">
-  <img src="https://streak-stats.demolab.com?user=rahul-sahane&theme=tokyonight&hide_border=true" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=rahul-sahane&layout=compact&theme=tokyonight&hide_border=true" />
-</p>
-
----
-
 <div align="center">
 
 ### 🐍 Contribution Snake
