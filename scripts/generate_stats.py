@@ -161,18 +161,18 @@ def donut(cx, cy, items, delay):
     return "\n".join(out), total
 
 
-def lang_panel(x, title, counter, colors, legend_x, pct_x, ring_cx, delay):
+def lang_panel(x, title, counter, colors, legend_x, pct_x, ring_cx, delay, width=550):
     top = counter.most_common(5)
     rest = sum(counter.values()) - sum(v for _, v in top)
     items = [(n, v, colors.get(n) or PALETTE[i]) for i, (n, v) in enumerate(top)]
     if rest > 0:
         items.append(("Other", rest, PALETTE[5]))
-    s = [f'<rect class="tile" style="animation-delay:{delay:.2f}s" x="{x}" y="526" width="550" height="250" rx="20" '
+    s = [f'<rect class="tile" style="animation-delay:{delay:.2f}s" x="{x}" y="526" width="{width}" height="250" rx="20" '
          f'fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>',
          f'<g class="fade" style="animation-delay:{delay + .2:.2f}s">'
          f'<text x="{x + 28}" y="566" font-size="15" font-weight="600" fill="#8B94B3">{escape(title)}</text></g>']
     if not items:
-        s.append(f'<text x="{x + 275}" y="660" text-anchor="middle" font-size="14" fill="#8B94B3">No data yet</text>')
+        s.append(f'<text x="{x + width / 2}" y="660" text-anchor="middle" font-size="14" fill="#8B94B3">No data yet</text>')
         return "\n".join(s)
     ring, total = donut(ring_cx, 668, items, delay + 0.3)
     s.append(ring)
@@ -279,8 +279,7 @@ text{{font-family:'Segoe UI Variable Display','Segoe UI','SF Pro Display',Inter,
 <text x="1132" y="342" text-anchor="end" font-size="13" fill="#8B94B3">{escape(peak_txt)}</text></g>
 {chr(10).join(bars)}
 
-{lang_panel(40, "Top languages by repository", lang_repo, colors, 270, 562, 165, 0.6)}
-{lang_panel(610, "Top languages by commit", lang_commit, colors, 638, 872, 1020, 0.75)}
+{lang_panel(40, "Top languages by repository", lang_repo, colors, 650, 1120, 400, 0.6, width=1120)}
 </svg>
 '''
     return svg
