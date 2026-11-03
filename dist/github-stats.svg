@@ -34,7 +34,7 @@ text{font-family:'Segoe UI Variable Display','Segoe UI','SF Pro Display',Inter,s
 <rect class="tile" style="animation-delay:0.0s" x="40" y="96" width="300" height="190" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>
 <g class="fade" style="animation-delay:.2s">
 <text x="68" y="138" font-size="15" font-weight="600" fill="#8B94B3">Total contributions</text>
-<text x="68" y="218" font-size="68" font-weight="800" fill="url(#numfill)">200</text>
+<text x="68" y="218" font-size="68" font-weight="800" fill="url(#numfill)">202</text>
 <text x="68" y="254" font-size="14" fill="#8B94B3">since 2023</text></g>
 
 <rect class="tile" style="animation-delay:0.1s" x="360" y="96" width="480" height="190" rx="20" fill="#fff" fill-opacity=".04" stroke="url(#tileEdge)" stroke-width="1.4"/>
@@ -74,8 +74,8 @@ text{font-family:'Segoe UI Variable Display','Segoe UI','SF Pro Display',Inter,s
 <rect class="bar" style="animation-delay:0.83s" x="554.2" y="382.6" width="28" height="93.4" rx="6" fill="url(#bar)"><title>11AM: 21 commits</title></rect>
 <rect class="bar" style="animation-delay:0.86s" x="598.4" y="440.9" width="28" height="35.1" rx="6" fill="url(#bar)"><title>12PM: 7 commits</title></rect>
 <text x="612.4" y="496" text-anchor="middle" font-size="12" fill="#8B94B3">12PM</text>
-<rect class="bar" style="animation-delay:0.89s" x="642.6" y="453.4" width="28" height="22.6" rx="6" fill="url(#bar)"><title>1PM: 4 commits</title></rect>
-<rect class="bar" style="animation-delay:0.92s" x="686.8" y="465.8" width="28" height="10.2" rx="6" fill="url(#bar)"><title>2PM: 1 commits</title></rect>
+<rect class="bar" style="animation-delay:0.89s" x="642.6" y="449.2" width="28" height="26.8" rx="6" fill="url(#bar)"><title>1PM: 5 commits</title></rect>
+<rect class="bar" style="animation-delay:0.92s" x="686.8" y="461.7" width="28" height="14.3" rx="6" fill="url(#bar)"><title>2PM: 2 commits</title></rect>
 <rect class="bar" style="animation-delay:0.95s" x="731.0" y="470.0" width="28" height="6.0" rx="6" fill="url(#bar)"><title>3PM: 0 commits</title></rect>
 <text x="745.0" y="496" text-anchor="middle" font-size="12" fill="#8B94B3">3PM</text>
 <rect class="bar" style="animation-delay:0.98s" x="775.2" y="465.8" width="28" height="10.2" rx="6" fill="url(#bar)"><title>4PM: 1 commits</title></rect>
@@ -90,24 +90,14 @@ text{font-family:'Segoe UI Variable Display','Segoe UI','SF Pro Display',Inter,s
 <rect class="bar" style="animation-delay:1.19s" x="1084.6" y="378.5" width="28" height="97.5" rx="6" fill="url(#bar)"><title>11PM: 22 commits</title></rect>
 <text x="1054.4" y="360.0" text-anchor="middle" font-size="13" font-weight="700" fill="#7CF3E0">25</text>
 
-<rect class="tile" style="animation-delay:0.60s" x="40" y="526" width="550" height="250" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>
+<rect class="tile" style="animation-delay:0.60s" x="40" y="526" width="1120" height="250" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>
 <g class="fade" style="animation-delay:0.80s"><text x="68" y="566" font-size="15" font-weight="600" fill="#8B94B3">Top languages by repository</text></g>
-<circle cx="165" cy="668" r="68" fill="none" stroke="#fff" stroke-opacity=".06" stroke-width="26"/>
-<circle class="seg" cx="165" cy="668" r="68" fill="none" stroke="#b07219" stroke-width="26" stroke-dasharray="212.13 427.26" stroke-dashoffset="-0.75" transform="rotate(-90 165 668)" style="animation-delay:0.90s;--len:212.13"/>
-<circle class="seg" cx="165" cy="668" r="68" fill="none" stroke="#3572A5" stroke-width="26" stroke-dasharray="105.31 427.26" stroke-dashoffset="-214.38" transform="rotate(-90 165 668)" style="animation-delay:1.02s;--len:105.31"/>
-<circle class="seg" cx="165" cy="668" r="68" fill="none" stroke="#f1e05a" stroke-width="26" stroke-dasharray="105.31 427.26" stroke-dashoffset="-321.19" transform="rotate(-90 165 668)" style="animation-delay:1.14s;--len:105.31"/>
-<g class="fade" style="animation-delay:1.40s"><text x="165" y="672" text-anchor="middle" font-size="24" font-weight="800" fill="url(#numfill)">50%</text><text x="165" y="690" text-anchor="middle" font-size="12" fill="#8B94B3">Java</text></g>
-<g class="fade" style="animation-delay:1.00s"><circle cx="276" cy="599" r="6" fill="#b07219"/><text x="292" y="604" font-size="15" font-weight="600" fill="#E8ECF8">Java</text><text x="562" y="604" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">50%</text></g>
-<g class="fade" style="animation-delay:1.08s"><circle cx="276" cy="630" r="6" fill="#3572A5"/><text x="292" y="635" font-size="15" font-weight="600" fill="#E8ECF8">Python</text><text x="562" y="635" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">25%</text></g>
-<g class="fade" style="animation-delay:1.16s"><circle cx="276" cy="661" r="6" fill="#f1e05a"/><text x="292" y="666" font-size="15" font-weight="600" fill="#E8ECF8">JavaScript</text><text x="562" y="666" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">25%</text></g>
-<rect class="tile" style="animation-delay:0.75s" x="610" y="526" width="550" height="250" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>
-<g class="fade" style="animation-delay:0.95s"><text x="638" y="566" font-size="15" font-weight="600" fill="#8B94B3">Top languages by commit</text></g>
-<circle cx="1020" cy="668" r="68" fill="none" stroke="#fff" stroke-opacity=".06" stroke-width="26"/>
-<circle class="seg" cx="1020" cy="668" r="68" fill="none" stroke="#3572A5" stroke-width="26" stroke-dasharray="250.55 427.26" stroke-dashoffset="-0.75" transform="rotate(-90 1020 668)" style="animation-delay:1.05s;--len:250.55"/>
-<circle class="seg" cx="1020" cy="668" r="68" fill="none" stroke="#b07219" stroke-width="26" stroke-dasharray="124.53 427.26" stroke-dashoffset="-252.80" transform="rotate(-90 1020 668)" style="animation-delay:1.17s;--len:124.53"/>
-<circle class="seg" cx="1020" cy="668" r="68" fill="none" stroke="#f1e05a" stroke-width="26" stroke-dasharray="47.68 427.26" stroke-dashoffset="-378.83" transform="rotate(-90 1020 668)" style="animation-delay:1.29s;--len:47.68"/>
-<g class="fade" style="animation-delay:1.55s"><text x="1020" y="672" text-anchor="middle" font-size="24" font-weight="800" fill="url(#numfill)">59%</text><text x="1020" y="690" text-anchor="middle" font-size="12" fill="#8B94B3">Python</text></g>
-<g class="fade" style="animation-delay:1.15s"><circle cx="644" cy="599" r="6" fill="#3572A5"/><text x="660" y="604" font-size="15" font-weight="600" fill="#E8ECF8">Python</text><text x="872" y="604" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">59%</text></g>
-<g class="fade" style="animation-delay:1.23s"><circle cx="644" cy="630" r="6" fill="#b07219"/><text x="660" y="635" font-size="15" font-weight="600" fill="#E8ECF8">Java</text><text x="872" y="635" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">29%</text></g>
-<g class="fade" style="animation-delay:1.31s"><circle cx="644" cy="661" r="6" fill="#f1e05a"/><text x="660" y="666" font-size="15" font-weight="600" fill="#E8ECF8">JavaScript</text><text x="872" y="666" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">12%</text></g>
+<circle cx="400" cy="668" r="68" fill="none" stroke="#fff" stroke-opacity=".06" stroke-width="26"/>
+<circle class="seg" cx="400" cy="668" r="68" fill="none" stroke="#b07219" stroke-width="26" stroke-dasharray="212.13 427.26" stroke-dashoffset="-0.75" transform="rotate(-90 400 668)" style="animation-delay:0.90s;--len:212.13"/>
+<circle class="seg" cx="400" cy="668" r="68" fill="none" stroke="#3572A5" stroke-width="26" stroke-dasharray="105.31 427.26" stroke-dashoffset="-214.38" transform="rotate(-90 400 668)" style="animation-delay:1.02s;--len:105.31"/>
+<circle class="seg" cx="400" cy="668" r="68" fill="none" stroke="#f1e05a" stroke-width="26" stroke-dasharray="105.31 427.26" stroke-dashoffset="-321.19" transform="rotate(-90 400 668)" style="animation-delay:1.14s;--len:105.31"/>
+<g class="fade" style="animation-delay:1.40s"><text x="400" y="672" text-anchor="middle" font-size="24" font-weight="800" fill="url(#numfill)">50%</text><text x="400" y="690" text-anchor="middle" font-size="12" fill="#8B94B3">Java</text></g>
+<g class="fade" style="animation-delay:1.00s"><circle cx="656" cy="599" r="6" fill="#b07219"/><text x="672" y="604" font-size="15" font-weight="600" fill="#E8ECF8">Java</text><text x="1120" y="604" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">50%</text></g>
+<g class="fade" style="animation-delay:1.08s"><circle cx="656" cy="630" r="6" fill="#3572A5"/><text x="672" y="635" font-size="15" font-weight="600" fill="#E8ECF8">Python</text><text x="1120" y="635" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">25%</text></g>
+<g class="fade" style="animation-delay:1.16s"><circle cx="656" cy="661" r="6" fill="#f1e05a"/><text x="672" y="666" font-size="15" font-weight="600" fill="#E8ECF8">JavaScript</text><text x="1120" y="666" text-anchor="end" font-size="14" font-weight="600" fill="#8B94B3">25%</text></g>
 </svg>
