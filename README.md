@@ -35,7 +35,6 @@
 <img src="https://img.shields.io/badge/React.js-20232A?style=for-the-badge&logoColor=white"/>
 <img src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logoColor=white"/>
 <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logoColor=white"/>
-<img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logoColor=white"/>
 </p>
 
 **Backend & APIs**
