@@ -34,23 +34,23 @@ text{font-family:'Segoe UI Variable Display','Segoe UI','SF Pro Display',Inter,s
 <rect class="tile" style="animation-delay:0.0s" x="40" y="96" width="300" height="190" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>
 <g class="fade" style="animation-delay:.2s">
 <text x="68" y="138" font-size="15" font-weight="600" fill="#8B94B3">Total contributions</text>
-<text x="68" y="218" font-size="68" font-weight="800" fill="url(#numfill)">212</text>
+<text x="68" y="218" font-size="68" font-weight="800" fill="url(#numfill)">213</text>
 <text x="68" y="254" font-size="14" fill="#8B94B3">since 2023</text></g>
 
 <rect class="tile" style="animation-delay:0.1s" x="360" y="96" width="480" height="190" rx="20" fill="#fff" fill-opacity=".04" stroke="url(#tileEdge)" stroke-width="1.4"/>
 <circle cx="462" cy="196" r="62" fill="none" stroke="#fff" stroke-opacity=".06" stroke-width="14"/>
 <circle class="ring" cx="462" cy="196" r="62" fill="none" stroke="url(#ring)" stroke-width="14" stroke-linecap="round" stroke-dasharray="389.56" transform="rotate(-90 462 196)"/>
 <g class="fade" style="animation-delay:.5s">
-<text x="462" y="210" text-anchor="middle" font-size="40" font-weight="800" fill="url(#numfill)">53</text>
+<text x="462" y="210" text-anchor="middle" font-size="40" font-weight="800" fill="url(#numfill)">54</text>
 <text x="570" y="138" font-size="15" font-weight="600" fill="#8B94B3">Current streak</text>
-<text x="570" y="196" font-size="44" font-weight="800" fill="url(#numfill)">53 <tspan font-size="20" font-weight="600" fill="#8B94B3">days</tspan></text>
-<text x="570" y="236" font-size="14" fill="#8B94B3">Sep 18 – Nov 9</text></g>
+<text x="570" y="196" font-size="44" font-weight="800" fill="url(#numfill)">54 <tspan font-size="20" font-weight="600" fill="#8B94B3">days</tspan></text>
+<text x="570" y="236" font-size="14" fill="#8B94B3">Sep 18 – Nov 10</text></g>
 
 <rect class="tile" style="animation-delay:0.2s" x="860" y="96" width="300" height="190" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>
 <g class="fade" style="animation-delay:.4s">
 <text x="888" y="138" font-size="15" font-weight="600" fill="#8B94B3">Longest streak</text>
-<text x="888" y="206" font-size="60" font-weight="800" fill="url(#numfill)">53 <tspan font-size="20" font-weight="600" fill="#8B94B3">days</tspan></text>
-<text x="888" y="246" font-size="14" fill="#8B94B3">Sep 18 – Nov 9</text></g>
+<text x="888" y="206" font-size="60" font-weight="800" fill="url(#numfill)">54 <tspan font-size="20" font-weight="600" fill="#8B94B3">days</tspan></text>
+<text x="888" y="246" font-size="14" fill="#8B94B3">Sep 18 – Nov 10</text></g>
 
 <rect class="tile" style="animation-delay:0.3s" x="40" y="306" width="1120" height="200" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".09"/>
 <g class="fade" style="animation-delay:.5s">
